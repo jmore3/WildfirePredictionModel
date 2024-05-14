@@ -12,14 +12,7 @@ EPOCHS = 10
 # Create data generators
 train_datagen = ImageDataGenerator(rescale=1./255)
 train_generator = train_datagen.flow_from_directory(
-    'test/nowildfire',
-    target_size=(IMAGE_SIZE, IMAGE_SIZE),
-    batch_size=BATCH_SIZE,
-    class_mode='categorical')
-
-valid_datagen = ImageDataGenerator(rescale=1./255)
-valid_generator = valid_datagen.flow_from_directory(
-    'test/wildfire',
+    'test',
     target_size=(IMAGE_SIZE, IMAGE_SIZE),
     batch_size=BATCH_SIZE,
     class_mode='categorical')
@@ -42,7 +35,4 @@ model = Sequential([
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 # Train the model
-model.fit(train_generator, epochs=EPOCHS, validation_data=valid_generator)
-
-# Save the model
-model.save('wildfire_prediction_model.h5')
+model.fit(train_generator, epochs=EPOCHS)
